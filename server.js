@@ -28,7 +28,7 @@ var auth = function (req, res, next) {
 // logout destoriying session
 app.get('/logout', function (req, res) {
     req.session.destroy();
-    res.redirect('/Adminlogin');
+    res.redirect('/');
 });
 
 // body perser
@@ -86,6 +86,11 @@ app.get('/Adminlogin',(req,res) =>{
 app.get('/customview',(req,res)=>{
     res.render('customview.ejs')
 })
+
+app.get('/status',(req,res)=>{
+    res.render('status.ejs')
+})
+
 app.post('/Userlogin',(req,res) => {
 
     var email = req.body.lemails;
@@ -140,7 +145,7 @@ app.post('/customerReg', (req,res) => {
 
     var time = dateFormat(new Date(), "yyyy-mm-dd");
  
-    var email = req.body.email;
+    var email = req.body.emails;
     const cdata = {
         "name" : req.body.names,
         "email" : req.body.emails,
@@ -388,7 +393,7 @@ app.post('/cus_register',auth, (req, res) => {
             "installment_amount": installment_amount,
             "img": img,
             "date": 12,
-            "status":status
+            "status":"not approved"
 
         }
         
