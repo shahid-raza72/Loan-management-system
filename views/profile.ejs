@@ -1,0 +1,176 @@
+
+
+<!-- navbar -->
+
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+
+
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script> -->
+        <!-- <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
+        
+        
+        <!------ Include the above in your HEAD tag ---------->
+        <link rel="stylesheet" href="/css/profile.css">
+        <link rel="stylesheet" href="/css/header.css">
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Profile of <%=print[0].cus_name%></title>
+    </head>
+    <body>
+       
+        <div class="container">
+        
+            <div class="row profile">
+        
+                <div class="col-md-3">
+        
+                    <div class="profile-sidebar">
+                        <!-- <div class="brand_logo_container">
+                            <img src="/uploads/login-logo.png" class="brand_logo" alt="Logo">
+                        </div> -->
+                        <div class="profile-usertitle p-5">
+                            <div class="profile-usertitle-name">
+                                <img src="/uploads/<%=print[0].img%>" class="brand_logo" alt="Logo">
+        
+                            </div>
+        
+                        </div>
+        
+                        <div class="profile-usermenu">
+                            <ul class="nav">
+                                <li>
+                                    <a href="#">
+                                        <i class="glyphicon glyphicon-plus"></i>
+                                        ID: <%=print[0].cus_id%> </a>
+                                </li>
+                                <li>
+                                    <a href="/invoice/<%=print[0].cus_id%>">
+                                        <i class="glyphicon glyphicon-user"></i>
+                                        Name: <%=print[0].cus_name%> </a>
+                                </li>
+                                <li class="active">
+                                    <a href="/invoice/<%=print[0].cus_id%>">
+                                        <i class="glyphicon glyphicon-home"></i>
+                                        Address: <%=print[0].cus_address%> </a>
+                                </li>
+                                <li class="active">
+                                    <a href="/invoice/<%=print[0].cus_id%>">
+                                        <i class="glyphicon glyphicon-phone"></i>
+                                        Contact: <%=print[0].cus_contact%> </a>
+                                </li>
+        
+                                <li>
+                                    <a href="#" target="_blank">
+                                        <i class="glyphicon glyphicon-gift"></i>
+                                        Asset: <%=print[0].cus_asset%> </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="glyphicon glyphicon-euro"></i>
+                                        Asset Price: <%=print[0].asset_price%> </a>
+                                </li>
+        
+                            </ul>
+        
+                        </div>
+                        <div class="profile-usertitle">
+                            <div class="profile-usertitle-name">
+                                Loan Info
+                            </div>
+                        </div>
+                        <div class="profile-usermenu">
+                            <ul class="nav">
+                                <li>
+                                    <a href="/view_scheme">
+                                        <i class="glyphicon glyphicon-plus"></i>
+                                        Scheme ID: <%=print[0].scheme_id%> </a>
+                                </li>
+                                <li class="active">
+                                    <a href="/view_scheme">
+                                        <i class="glyphicon glyphicon-user"></i>
+                                        Name: <%=print[0].scheme_name%> </a>
+                                </li>
+                                <li class="active">
+                                    <a href="#">
+                                        <i class="glyphicon glyphicon-usd"></i>
+                                        Amount: <%=print[0].scheme_amount%> </a>
+                                </li>
+        
+                                <li>
+                                    <a href="/installment2/<%=print[0].cus_id%>" target="_blank">
+                                        <i class="glyphicon glyphicon-euro"></i>
+                                        Installment: <%=print[0].installment_amount%> </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="glyphicon glyphicon-time"></i>
+                                        Taken Date: <%=print[0].date%> </a>
+                                </li>
+        
+                            </ul>
+        
+                        </div>
+        
+                    </div>
+                </div>
+        
+                <div class="col-md-9">
+                    <div class="profile-content">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Installment NO#</th>
+                                    <th scope="col">Installment Dates</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% var cnt=1 %>
+                                <% print.forEach(function (user) { %>
+                                <tr>
+                                    <td><%= cnt++ %></td>
+        
+        
+                                    <td><%= user.Time %></td>
+        
+        
+                                    <% }) %>
+        
+                                </tr>
+        
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <center>
+          <a href="/submitted"><button type="button" class="btn btn-link">Go to Home</button></a>  
+        </center>
+        <br>
+        <br>
+
+        <!-- <script>
+            $("#print").click(function () {
+                    alert("Create PDF ?");
+                });
+        </script> -->
+    </body>
+    </html>
+
