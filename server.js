@@ -387,7 +387,8 @@ app.post('/cus_register',auth, (req, res) => {
             "scheme_amount": scheme_amount,
             "installment_amount": installment_amount,
             "img": img,
-            date
+            "date": 12,
+            "status":status
 
         }
         

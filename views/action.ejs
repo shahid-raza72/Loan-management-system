@@ -42,6 +42,16 @@
                 <input type="text" class="form-control" id="address" name="address" value=" <%=print[0].cus_address%> " required>
             </div>
             <div class="form-group">
+                <h6>Status</h6>
+                >
+                    <select  name="status">
+                        <option value="Approved">Not approved</option>
+                        <option value="Not approved">Approved</option>
+                   
+                    </select>
+                
+            </div>
+            <div class="form-group">
                 <label for="text">Asset</label>
                 <input type="text" class="form-control" id="asset" readonly name="asset" value=" <%=print[0].cus_asset%> " required>
             </div>
