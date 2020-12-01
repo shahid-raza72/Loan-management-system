@@ -9,7 +9,7 @@
 
 <head>
     <link rel="stylesheet" href="/css/login.css">
-    <title>User Login</title>
+    <title> Login</title>
 </head>
 
 <body>
@@ -24,19 +24,19 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center form_container">
-                    <form action="/Userlogin" method="POST">
+                    <form action="/login" method="POST">
                         <div class="input-group mb-3">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" name="lemails" id="lemail" class="form-control input_user" value=""
+                            <input type="text" name="lemail" id="lemail" class="form-control input_user" value=""
                                 placeholder="User Name">
                         </div>
                         <div class="input-group mb-2">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
-                            <input type="password" name="lpasss" id="lpass" class="form-control input_pass" value=""
+                            <input type="password" name="lpass" id="lpass" class="form-control input_pass" value=""
                                 placeholder="PassWord">
                                 <i class="text-danger"></i>
                         </div>
@@ -45,14 +45,19 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-center mt-3 login_container">
-                            <button type="submit" class="btn login_btn">User Login</button>
+                            <button type="submit" class="btn login_btn"> Login</button>
                         </div>
                     </form>
                 </div>
 
                 <div class="mt-4">
                     <div class="d-flex justify-content-center links">
-                        Don't have an account? <a href="/customerReg" class="ml-2 text-white">Sign Up</a>
+                        Sign Up As An Admin
+                        <a href="/register" class="ml-2 text-white">Sign Up</a>
+                        
+                    </div>
+                    <div class="d-flex justify-content-center links">
+                        Sign Up As customer? <a href="/customerReg" class="ml-2 text-white">Sign Up</a>
                     </div>
                     <div class="d-flex justify-content-center links">
                         <a href="/forgot" class="text-white">Forgot your password?</a>

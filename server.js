@@ -71,16 +71,13 @@ app.set('view-engine', 'ejs')
 app.get('/', (req , res) => {
     res.render('front.ejs' , { name:'NID' })
 })
-app.get('/submitted', (req , res) => {
-    res.render('submitted.ejs')
+app.get('/customerReg', (req , res) => {
+    res.render('customerReg.ejs')
 })
 
-app.get('/Userlogin',(req,res) =>{
-    res.render('Userlogin.ejs')
 
-})
-app.get('/Adminlogin',(req,res) =>{
-    res.render('Adminlogin.ejs')
+app.get('/login',(req,res) =>{
+    res.render('login.ejs')
 
 })
 app.get('/customview',(req,res)=>{
@@ -91,50 +88,9 @@ app.get('/status',(req,res)=>{
     res.render('status.ejs')
 })
 
-app.post('/Userlogin',(req,res) => {
 
-    var email = req.body.lemails;
-   // console.log(email);
-    
-    var password = req.body.lpasss;
-    con.query('SELECT * FROM customers WHERE email = ?', [email], function (error, results, fields) {
-        if (error) {
-            console.log("error ocurred",error);
-            res.send({
-                "code": 400,
-                "failed": "error ocurred"
-            })
-        } else {
-            console.log('The solution is: ', results);
-            // future date creation
-            //var date2 = new Date((new Date()).getTime() + (2 * (30 * 86400000)))
-           
-            
-            if (results.length > 0) {
-                if (results[0].pass == password) {
-                    req.session.user= "yes";
-                    req.session.admin=false;
-                    
-                    res.redirect('/customview');
-                }
-                else {
-                   var id = "password not match";
-                    res.redirect('/notify/' + id);
 
-                  }
-            }
-            else {
-               var id = "email not exits";
-               res.redirect('/notify/' + id);
-           }
-      }
-    });
 
-});
-app.get('/customerReg',(req, res) => {
-    res.render('customerReg.ejs')
-
-})
 app.post('/customerReg', (req,res) => {
     //let customers ='CREATE TABLE customers(id INT,name VARCHAR (20),email VARCHAR (20),father_name VARCHAR (20),likee VARCHAR (80),pass VARCHAR (30),time DATE)'
     //con.query(customers,function(err,result){
@@ -145,18 +101,21 @@ app.post('/customerReg', (req,res) => {
 
     var time = dateFormat(new Date(), "yyyy-mm-dd");
  
-    var email = req.body.emails;
+    var email = req.body.email;
     const cdata = {
-        "name" : req.body.names,
-        "email" : req.body.emails,
-        "father_name": req.body.fathers,
+        "name" : req.body.name,
+        "email" : req.body.email,
+        "father_name": req.body.father,
         "likee": req.body.likes,
-        "pass": req.body.passwords,
-         "time": time
+        "pass": req.body.password,
+         "time": time,
+         "role":req.body.role,
+
+
         
     }
    
-    con.query(`SELECT * FROM  customers WHERE email = '${email}'`, cdata, function (error, results, fields) {
+    con.query(`SELECT * FROM  users WHERE email = '${email}'`, cdata, function (error, results, fields) {
         if (error) {
             throw(error);
         } else{
@@ -168,14 +127,14 @@ app.post('/customerReg', (req,res) => {
                 var data = {
                     msg : id
                 }
-                res.redirect("/notify/" + id);
+                res.redirect("/notifi/" + id);
             }
             else{
 
-                con.query('INSERT INTO customers SET ?', cdata, function (error, results, fields) {
+                con.query('INSERT INTO users SET ?', cdata, function (error, results, fields) {
                     if (error) throw res.redirect("/customerReg");
 
-                    res.redirect("/Userlogin")
+                    res.redirect("/login")
                 });
             }
         }
@@ -186,41 +145,59 @@ app.post('/customerReg', (req,res) => {
    
 });
 
-app.post('/Adminlogin',(req,res) => {
+app.post('/login',(req,res) => {
 
     var email = req.body.lemail;
    // console.log(email);
-    
+    var role = req.body.role;
     var password = req.body.lpass;
-    con.query('SELECT * FROM users WHERE email = ?', [email], function (error, results, fields) {
+    con.query('SELECT * FROM users WHERE email = ?', [email],function (error, results, fields) {
         if (error) {
             // console.log("error ocurred",error);
             res.send({
                 "code": 400,
                 "failed": "error ocurred"
             })
-        } else {
+        } 
+        
+        else if(results.length > 0)
+        {
+            if (results[0].pass == password &&results[0].role=='customer') {
+                req.session.user = "yes";
+                req.session.admin = false;
+                res.redirect('/customview');
+            }
+            else
+             { (results.length > 0 )
+                {
+                   if (results[0].pass == password && results[0].role=='admin')
+                    {
+                       req.session.user = "yes";
+                       req.session.admin = true;
+                       res.redirect('/index');
+                   }
+                   else {
+                       var id = "password not match";
+                       res.redirect('/notifi/' + id);
+   
+                     }
+               }
+               
+                
+            }
+        }
+        
+        else {
             // console.log('The solution is: ', results);
             // future date creation
             //var date2 = new Date((new Date()).getTime() + (2 * (30 * 86400000)))
-           
             
-            if (results.length > 0) {
-                if (results[0].pass == password) {
-                    req.session.user = "yes";
-                    req.session.admin = true;
-                    res.redirect('/index');
-                }
-                else {
-                    var id = "password not match";
-                    res.redirect('/notifi/' + id);
-
-                  }
-            }
-            else {
+            
+            
+            
                 var id = "email not exits";
                 res.redirect('/notifi/' + id);
-            }
+            
         }
     });
 
@@ -259,7 +236,9 @@ app.post('/register', (req,res) => {
         "father_name": req.body.father,
         "likee": req.body.like,
         "pass": req.body.password,
-         "time": time
+         "time": time,
+         "role":req.body.role,
+         "admin_id":req.body.admin_id
         
     }
     con.query(`SELECT * FROM  users WHERE email = '${email}'`, redata, function (error, results, fields) {
@@ -281,7 +260,7 @@ app.post('/register', (req,res) => {
                 con.query('INSERT INTO users SET ?', redata, function (error, results, fields) {
                     if (error) throw res.redirect("/register");
 
-                    res.redirect("/Adminlogin")
+                    res.redirect("/login")
                 });
             }
         }
@@ -872,8 +851,8 @@ app.post('/installment', auth,function (req,res) {
                 "remaining": remaining,
                 "status": status,
                 "fine": fine,
-                ins_date: req.body.time,
-                schedule_date: schedule_date
+                "ins_date": req.body.time,
+                "schedule_date": schedule_date
             }
             con.query('INSERT INTO installment SET ?', data, function (error, results, fields) {
                 if (error) throw res.send(error);
@@ -899,7 +878,7 @@ app.post('/installment', auth,function (req,res) {
 
             con.query(`UPDATE loan_info SET remaining_amount= '${remaining}', installment_remaining= '${remaining_install}'  WHERE cus_id = ${cusID}`, function (error, results) {
                 if (error) throw  res.send(error);
-               res.redirect("/invoice/ " + cusID);
+               res.redirect("/invoice " + cusID);
             })
                 
           
