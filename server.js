@@ -110,7 +110,7 @@ app.post('/customerReg', (req,res) => {
         "email" : req.body.email,
         "father_name": req.body.father,
         "likee": req.body.likes,
-        "pass": req.body.password,
+        "pass":  bcrypt.hashSync(req.body.password,10),
          "time": time,
          "role":req.body.role,
 
@@ -158,7 +158,7 @@ app.post('/agentreg', (req,res) => {
         "email" : req.body.email,
         "father_name": req.body.father,
         "likee": req.body.likes,
-        "pass": req.body.password,
+        "pass":  bcrypt.hashSync(req.body.password,10),
          "time": time,
          "role":req.body.role
 
@@ -207,19 +207,19 @@ app.post('/login',(req,res) => {
        
         if (results.length > 0) 
         { 
-            if (results[0].pass == password && results[0].role =='customer') {
+            if (bcrypt.compare(password , results[0].pass == password ) && results[0].role =='customer') {
                 req.session.user = "yes";
                 req.session.admin = false;
                 res.redirect('/customview');
                 console.log("ok");
             }
-           else if (results[0].pass == password && results[0].role=='admin')
+           else if (bcrypt.compare(password , results[0].pass == password ) && results[0].role=='admin')
             {
                req.session.user = "yes";
                req.session.admin = true;
                res.redirect('/index');
            }
-           else if(results[0].pass == password && results[0].role=='agent')
+           else if(bcrypt.compare(password , results[0].pass == password )&& results[0].role=='agent')
            {
               req.session.user = "yes";
               req.session.admin = false;
@@ -269,7 +269,7 @@ app.post('/register', (req,res) => {
         "email" : req.body.email,
         "father_name": req.body.father,
         "likee": req.body.like,
-        "pass": req.body.password,
+        "pass": bcrypt.hashSync(req.body.password,10),
          "time": time,
          "role":req.body.role,
          "admin_id":req.body.admin_id
