@@ -428,7 +428,7 @@ app.post('/cus_register',auth, (req, res) => {
             "installment_amount": installment_amount,
             "img": img,
             "date": 12,
-            "status":"not approved",
+            "status":req.body.status,
             "email" :req.body.lemail
 
         }
@@ -474,7 +474,7 @@ app.post('/cus_register',auth, (req, res) => {
             
             let cus_id = results[0].cus_id;
             let name = results[0].cus_name;
-            let status  = "unpaid";
+           
             
         //   creating wekly and monthly time
            if(duration =='week')
@@ -722,12 +722,13 @@ app.post('/action', auth, (req, res) => {
         var name  = req.body.name;
         var contact  =  req.body.contact;
           var address = req.body.address;
+          var status =req.body.status;
         //  var asset =  req.body.asset;
         // var asset_price =  req.body.p_asset;
        // "scheme": req.body.scheme,
         
     
-    con.query(`UPDATE customer SET cus_name= '${name}', cus_contact = '${contact}', cus_address = '${address}'  WHERE cus_id = ${id}`, function (error, results) {
+    con.query(`UPDATE customer SET cus_name= '${name}', cus_contact = '${contact}', cus_address = '${address}',status='${status}'  WHERE cus_id = ${id}`, function (error, results) {
         if (error) throw error;
         res.redirect("/cus_view")
     })
@@ -1055,7 +1056,7 @@ app.get('/profile/:id',function (req,res) {
      var id  = req.params.id;
      //console.log(id);
      
-    con.query(`SELECT t.cus_id,t.cus_name,t.cus_contact,t.cus_address,t.cus_asset,t.asset_price,t.date,t.scheme_id,t.scheme_name,t.scheme_amount,t.installment_amount,t.date,t.img, tr.Time FROM customer t, schedule tr WHERE t.cus_id = tr.cus_id AND tr.cus_id  =  ${id}`, function (err, result) {
+    con.query(`SELECT t.cus_id,t.cus_name,t.cus_contact,t.cus_address,t.cus_asset,t.asset_price,t.date,t.scheme_id,t.scheme_name,t.scheme_amount,t.installment_amount,t.date,t.img,t.status, tr.Time FROM customer t, schedule tr WHERE t.cus_id = tr.cus_id AND tr.cus_id  =  ${id}`, function (err, result) {
 
         if (err) {
             res.send(err);
@@ -1101,7 +1102,7 @@ app.get("/generateReport/:id",auth, (req, res) => {
  var id  = req.params.id;
 
  
-    con.query(`SELECT t.cus_id,t.cus_name,t.cus_contact,t.cus_address,t.cus_asset,t.asset_price,t.date,t.scheme_id,t.scheme_name,t.scheme_amount,t.installment_amount,t.date,t.img, tr.Time FROM customer t, schedule tr WHERE t.cus_id = tr.cus_id AND tr.cus_id=  ${id}`, function (err, result) {
+    con.query(`SELECT t.cus_id,t.cus_name,t.cus_contact,t.cus_address,t.cus_asset,t.asset_price,t.date,t.scheme_id,t.scheme_name,t.scheme_amount,t.installment_amount,t.date,t.img,t.status, tr.Time FROM customer t, schedule tr WHERE t.cus_id = tr.cus_id AND tr.cus_id=  ${id}`, function (err, result) {
 
         if (err) {
             res.send(err);
