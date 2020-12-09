@@ -11,8 +11,7 @@ It is a simple webapplication called loan management system a user or customer c
 An agent can  login to system and can edit and view the loan information
 An admin can add new scheme and can edit the form and approved the form or reject the form.
 a user can redirect to its dashboard by login to the system and enter its customer id in searchbar and then customer will redirect to the dashboard.
-i just used hashing and salting for password encryption i did not used jwt because it will increase the size of header and loading time as well.
-
+i just used hashing and salting for password encryption i did not used jwt because If a user needs to change their password (for instance in case of account hijacking) and if an authentication has been performed beforehand, then a token generated with the previous password will still be valid until expiry.
 
 
 
